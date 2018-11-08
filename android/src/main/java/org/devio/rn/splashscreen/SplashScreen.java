@@ -18,6 +18,25 @@ public class SplashScreen {
     private static Dialog mSplashDialog;
     private static WeakReference<Activity> mActivity;
 
+    public static void show(final Activity activity, final int layourId, final int themeResId) {
+        if (activity == null) return;
+        mActivity = new WeakReference<Activity>(activity);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            if (!activity.isFinishing()) {
+                mSplashDialog = new Dialog(activity, themeResId);
+                mSplashDialog.setContentView(layourId);
+                mSplashDialog.setCancelable(false);
+
+                if (!mSplashDialog.isShowing()) {
+                mSplashDialog.show();
+                }
+            }
+            }
+        });
+    }
+
     /**
      * 打开启动屏
      */
